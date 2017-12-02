@@ -1,0 +1,9 @@
+extends ../includes/template
+
+block gallery 
+  section.gallery-container
+    - var n = 1
+    while n <= 4
+      .gallery-item
+        img(src="./img/gallery-img-" + n + ".jpeg", alt=n)
+      - n++

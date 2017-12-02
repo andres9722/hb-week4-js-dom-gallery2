@@ -1,0 +1,167 @@
+@import url("https://fonts.googleapis.com/css?family=Poppins");
+@import url("https://fonts.googleapis.com/css?family=Open+Sans:700");
+*,:after,:before{
+  box-sizing:border-box;
+}
+
+.gallery-container{
+  display:none;
+}
+
+body{
+  margin:0;
+  line-height:1.6;
+  font-family:Poppins,sans-serif;
+  background-color:#fcfcfc;
+  color:#53575a;
+}
+
+h1,h2,h3,h4,h5,h6{
+  font-family:Open Sans,sans-serif;
+  margin:0;
+}
+
+p{
+  margin:0;
+}
+
+img{
+  max-width:100%;
+  width:100%;
+  display:block;
+}
+
+.lightbox{
+  position:relative;
+}
+
+.lightbox-overlay{
+  position:fixed;
+  background:rgba(0,0,0,.9);
+  z-index:2;
+  display:-webkit-box;
+  display:-ms-flexbox;
+  display:flex;
+  -webkit-box-orient:vertical;
+  -webkit-box-direction:normal;
+      -ms-flex-direction:column;
+          flex-direction:column;
+  -webkit-box-pack:center;
+      -ms-flex-pack:center;
+          justify-content:center;
+  -ms-flex-line-pack:center;
+      align-content:center;
+}
+
+.lightbox-container,.lightbox-overlay{
+  top:0;
+  left:0;
+  width:100%;
+  height:100vh;
+}
+
+.lightbox-container{
+  text-align:center;
+  border-radius:5px;
+  position:absolute;
+  margin:0;
+}
+
+@media screen and (min-width:1024px){
+  .lightbox-container{
+    width:33%;
+    margin:0 auto;
+    height:90%;
+  }
+}
+
+.lightbox-description{
+  color:#dd3f3b;
+  font-weight:600;
+  position:absolute;
+  bottom:0;
+  left:50%;
+  width:100%;
+  -webkit-transform:translate(-50%);
+          transform:translate(-50%);
+  background:rgba(0,0,0,.5);
+  border-top:3px solid rgba(0,0,0,.9);
+}
+
+.lightbox-navigation__counter{
+  font-size:.8em;
+}
+
+.lightbox-image{
+  transition:all .7s ease;
+}
+
+.lightbox-image.animated-l,.lightbox-image.animated-r{
+  -webkit-animation:a .5s linear alternate;
+          animation:a .5s linear alternate;
+}
+
+@-webkit-keyframes a{
+  0%{
+    opacity:0;
+  }
+  to{
+    opacity:1;
+  }
+}
+
+@keyframes a{
+  0%{
+    opacity:0;
+  }
+  to{
+    opacity:1;
+  }
+}
+
+.next{
+  position:absolute;
+  top:45%;
+  right:0;
+  opacity:1;
+}
+
+.next.disabled{
+  opacity:0;
+}
+
+.next:after{
+  content:url(https://image.flaticon.com/icons/svg/180/180000.svg);
+  top:0;
+  right:0;
+  width:35px;
+  height:35px;
+  background:#fff;
+  border-radius:50%;
+  z-index:1;
+  border:1px solid #fff;
+}
+
+.next:after,.prev{
+  position:absolute;
+}
+
+.prev{
+  top:45%;
+  left:0;
+}
+
+.prev:after{
+  content:url(https://image.flaticon.com/icons/svg/179/179983.svg);
+  position:absolute;
+  top:0;
+  left:10%;
+  width:35px;
+  height:35px;
+  z-index:1;
+  background:#fff;
+  border-radius:50%;
+  border:1px solid #fff;
+}
+
+/*# sourceMappingURL=styles.css.map */
