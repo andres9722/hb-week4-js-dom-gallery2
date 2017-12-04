@@ -72,25 +72,22 @@ export class Lightbox {
       let target = e.target
 
       if (target === prev) {
-        image.classList.toggle('animated-l')
-        image.classList.remove('animated-r')
         if (i > 0) {
           image.src = larges[i - 1]
           i--
+          image.classList.add('animated')
+          setTimeout(() => {
+            image.classList.remove('animated')
+          }, 500)
         }
       } else if (target === next) {
-        image.classList.toggle('animated-r')
-        image.classList.remove('animated-l')
         if (i < larges.length - 1) {
           image.src = larges[i + 1]
           i++
-        }
-
-        if(i < larges.length - 1) {
-          next.style.opacity = 1
-        } else {
-          next.style.opacity = .5
-        }
+          image.classList.add('animated')
+          setTimeout(() => {
+            image.classList.remove('animated')
+          }, 1000)        }
       }
 
       description.textContent = descriptions[i]
