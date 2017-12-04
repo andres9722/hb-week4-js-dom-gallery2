@@ -1,40 +1,38 @@
 export class Lightbox {
-  constructor(container) {
+  constructor (container) {
     this.container = container,
     this.lightbox(container)
   }
 
-  lightbox(container) {
+  lightbox (container) {
     let images = this.getImages(container),
-    larges = this.getLargeImages(images),
-    descriptions = this.getDescriptions(images), 
-    i = 0
-
+      larges = this.getLargeImages(images),
+      descriptions = this.getDescriptions(images), 
+      i = 0
     this.openLightBox(images, i, larges, descriptions)
   }
 
-  getImages(container) {
+  getImages (container) {
     return [...container.querySelectorAll('img')]
   }
 
-  getLargeImages(gallery) {
+  getLargeImages (gallery) {
     return gallery.map(el => el.src)
   }
 
-  getDescriptions(gallery) {
+  getDescriptions (gallery) {
     return gallery.map(el => el.alt)
   }
 
-  openLightBox(gallery, i, larges, descriptions) {
+  openLightBox (gallery, i, larges, descriptions) {
     let lightboxEl = document.createElement('div')
 
     let lightBoxContent = `
       <div class="lightbox-overlay">
         <figure class="lightbox-container">
-
           <img src="${larges[i]}" class="lightbox-image">
           <figcaption>
-            <p class="lightbox-description">${descriptions[i]}</p>
+            <p class="lightbox-description">Imagen ${descriptions[i]} de ${descriptions.length}</p>
           </figcaption>
           <nav class="class="lightbox-navigation"">
             <a href="" class="lightbox-navigation__button prev"></a>
@@ -45,26 +43,20 @@ export class Lightbox {
     `
 
     lightboxEl.innerHTML = lightBoxContent
-
     lightboxEl.id = 'lightbox'
-
     document.body.appendChild(lightboxEl)
-
     this.navigateLightBox(lightboxEl, i, larges, descriptions)
   }
 
-  navigateLightBox(lightboxEl, i, larges, descriptions) {
+  navigateLightBox (lightboxEl, i, larges, descriptions) {
     let prev = lightboxEl.querySelector('.prev'),
       next = lightboxEl.querySelector('.next'),
       image = lightboxEl.querySelector('img'),
-      description = lightboxEl.querySelector('p'),
-      counter = lightboxEl.querySelector('span'),
-      close = lightboxEl.querySelector('.close-modal')
+      description = lightboxEl.querySelector('p')
 
     window.addEventListener('keyup', e => {
       if (e.key === 'ArrowRight') next.click()
       if (e.key === 'ArrowLeft') prev.click()
-      if (e.key === 'Escape') close.click()
     })
 
     lightboxEl.addEventListener('click', e => {
@@ -87,10 +79,11 @@ export class Lightbox {
           image.classList.add('animated')
           setTimeout(() => {
             image.classList.remove('animated')
-          }, 1000)        }
+          }, 500)
+        }
       }
 
-      description.textContent = descriptions[i]
+      description.textContent = `Imagen ${descriptions[i]} de ${descriptions.length}`
     })
   }
 }

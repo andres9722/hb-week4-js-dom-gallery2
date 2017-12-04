@@ -1,5 +1,3 @@
 import { Lightbox } from './modules/gallery-poo'
 
-const gal = new Lightbox(document.querySelector('.gallery-container'))
-
-
+new Lightbox(document.querySelector('.gallery-container'))

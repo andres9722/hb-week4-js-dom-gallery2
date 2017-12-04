@@ -3,7 +3,7 @@
 
 var _galleryPoo = require('./modules/gallery-poo');
 
-var gal = new _galleryPoo.Lightbox(document.querySelector('.gallery-container'));
+new _galleryPoo.Lightbox(document.querySelector('.gallery-container'));
 
 },{"./modules/gallery-poo":2}],2:[function(require,module,exports){
 'use strict';
@@ -32,7 +32,6 @@ var Lightbox = exports.Lightbox = function () {
           larges = this.getLargeImages(images),
           descriptions = this.getDescriptions(images),
           i = 0;
-
       this.openLightBox(images, i, larges, descriptions);
     }
   }, {
@@ -59,14 +58,11 @@ var Lightbox = exports.Lightbox = function () {
     value: function openLightBox(gallery, i, larges, descriptions) {
       var lightboxEl = document.createElement('div');
 
-      var lightBoxContent = '\n      <div class="lightbox-overlay">\n        <figure class="lightbox-container">\n\n          <img src="' + larges[i] + '" class="lightbox-image">\n          <figcaption>\n            <p class="lightbox-description">' + descriptions[i] + '</p>\n          </figcaption>\n          <nav class="class="lightbox-navigation"">\n            <a href="" class="lightbox-navigation__button prev"></a>\n            <a href="" class="lightbox-navigation__button next"></a>\n          </nav>\n        </figure>\n      </div>\n    ';
+      var lightBoxContent = '\n      <div class="lightbox-overlay">\n        <figure class="lightbox-container">\n          <img src="' + larges[i] + '" class="lightbox-image">\n          <figcaption>\n            <p class="lightbox-description">Imagen ' + descriptions[i] + ' de ' + descriptions.length + '</p>\n          </figcaption>\n          <nav class="class="lightbox-navigation"">\n            <a href="" class="lightbox-navigation__button prev"></a>\n            <a href="" class="lightbox-navigation__button next"></a>\n          </nav>\n        </figure>\n      </div>\n    ';
 
       lightboxEl.innerHTML = lightBoxContent;
-
       lightboxEl.id = 'lightbox';
-
       document.body.appendChild(lightboxEl);
-
       this.navigateLightBox(lightboxEl, i, larges, descriptions);
     }
   }, {
@@ -75,14 +71,11 @@ var Lightbox = exports.Lightbox = function () {
       var prev = lightboxEl.querySelector('.prev'),
           next = lightboxEl.querySelector('.next'),
           image = lightboxEl.querySelector('img'),
-          description = lightboxEl.querySelector('p'),
-          counter = lightboxEl.querySelector('span'),
-          close = lightboxEl.querySelector('.close-modal');
+          description = lightboxEl.querySelector('p');
 
       window.addEventListener('keyup', function (e) {
         if (e.key === 'ArrowRight') next.click();
         if (e.key === 'ArrowLeft') prev.click();
-        if (e.key === 'Escape') close.click();
       });
 
       lightboxEl.addEventListener('click', function (e) {
@@ -105,11 +98,11 @@ var Lightbox = exports.Lightbox = function () {
             image.classList.add('animated');
             setTimeout(function () {
               image.classList.remove('animated');
-            }, 1000);
+            }, 500);
           }
         }
 
-        description.textContent = descriptions[i];
+        description.textContent = 'Imagen ' + descriptions[i] + ' de ' + descriptions.length;
       });
     }
   }]);
