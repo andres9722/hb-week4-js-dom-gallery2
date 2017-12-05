@@ -1,3 +1,5 @@
-import { Lightbox } from './modules/gallery-poo'
+import { Gallery } from './modules/gallery-poo'
 
-new Lightbox(document.querySelector('.gallery-container'))
+import data from './modules/gallery-images'
+
+new Gallery(document.querySelector('.gallery-container'), data)

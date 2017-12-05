@@ -22,11 +22,11 @@ const postcssPlugins = [
       browsers: '> 1%, last 2 versions, Firefox ESR, Opera 12.1'
     }
   })
-];
+]
 
 const sassOptions = {
   outputStyle: 'expanded'
-};
+}
 
 gulp.task('styles', () =>
   gulp.src('./dev/scss/styles.scss')
@@ -37,21 +37,21 @@ gulp.task('styles', () =>
     .pipe(sourcemaps.write('.'))
     .pipe(gulp.dest('./public/css'))
     .pipe(server.stream({match: '**/*.css'}))
-);
+)
 
 gulp.task('pug', () =>
   gulp.src('./dev/pug/pages/*.pug')
     .pipe(plumber())
     .pipe(pug())
     .pipe(gulp.dest('./public'))
-);
+)
 
 gulp.task('scripts', () =>
   browserify('./dev/js/index.js')
     .transform(babelify)
     .bundle()
-    .on('error', function(err){
-      console.error(err);
+    .on('error', function (err){
+      console.error(err)
       this.emit('end')
     })
     .pipe(source('scripts.js'))
@@ -59,16 +59,16 @@ gulp.task('scripts', () =>
     .pipe(sourcemaps.init({ loadMaps: true }))
     .pipe(sourcemaps.write('.'))
     .pipe(gulp.dest('./public/js'))
-);
+)
 
 gulp.task('default', () => {
   server.init({
     server: {
       baseDir: './public'
-    },
-  });
+    }
+  })
 
-  watch('./dev/scss/**/*.scss', () => gulp.start('styles'));
-  watch('./dev/js/**/*.js', () => gulp.start('scripts',server.reload) );
-  watch('./dev/pug/**/*.pug', () => gulp.start('pug', server.reload) );
-});
+  watch('./dev/scss/**/*.scss', () => gulp.start('styles'))
+  watch('./dev/js/**/*.js', () => gulp.start('scripts', server.reload))
+  watch('./dev/pug/**/*.pug', () => gulp.start('pug', server.reload))
+})

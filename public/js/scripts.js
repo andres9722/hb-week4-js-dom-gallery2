@@ -3,9 +3,23 @@
 
 var _galleryPoo = require('./modules/gallery-poo');
 
-new _galleryPoo.Lightbox(document.querySelector('.gallery-container'));
+var _galleryImages = require('./modules/gallery-images');
 
-},{"./modules/gallery-poo":2}],2:[function(require,module,exports){
+var _galleryImages2 = _interopRequireDefault(_galleryImages);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+new _galleryPoo.Gallery(document.querySelector('.gallery-container'), _galleryImages2.default);
+
+},{"./modules/gallery-images":2,"./modules/gallery-poo":3}],2:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = ['https://images.pexels.com/photos/97524/pexels-photo-97524.jpeg?w=1260&h=750&auto=compress&cs=tinysrgb', 'https://images.pexels.com/photos/97587/pexels-photo-97587.jpeg?w=1260&h=750&auto=compress&cs=tinysrgb', 'https://images.pexels.com/photos/42094/pexels-photo-42094.jpeg?w=1260&h=750&auto=compress&cs=tinysrgb', 'https://images.pexels.com/photos/48012/pexels-photo-48012.jpeg?w=1260&h=750&auto=compress&cs=tinysrgb', 'https://images.pexels.com/photos/48262/pexels-photo-48262.jpeg?w=1260&h=750&auto=compress&cs=tinysrgb', 'https://images.pexels.com/photos/52907/pexels-photo-52907.jpeg?w=1260&h=750&auto=compress&cs=tinysrgb', 'https://images.pexels.com/photos/55787/pexels-photo-55787.jpeg?w=1260&h=750&auto=compress&cs=tinysrgb'];
+
+},{}],3:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -14,77 +28,50 @@ Object.defineProperty(exports, "__esModule", {
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
-
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-var Lightbox = exports.Lightbox = function () {
-  function Lightbox(container) {
-    _classCallCheck(this, Lightbox);
+var Gallery = exports.Gallery = function () {
+  function Gallery(container, data) {
+    _classCallCheck(this, Gallery);
 
-    this.container = container, this.lightbox(container);
+    this.i = 0;
+    this.openGallery(container, this.i, data);
   }
 
-  _createClass(Lightbox, [{
-    key: 'lightbox',
-    value: function lightbox(container) {
-      var images = this.getImages(container),
-          larges = this.getLargeImages(images),
-          descriptions = this.getDescriptions(images),
-          i = 0;
-      this.openLightBox(images, i, larges, descriptions);
-    }
-  }, {
-    key: 'getImages',
-    value: function getImages(container) {
-      return [].concat(_toConsumableArray(container.querySelectorAll('img')));
-    }
-  }, {
-    key: 'getLargeImages',
-    value: function getLargeImages(gallery) {
-      return gallery.map(function (el) {
-        return el.src;
-      });
-    }
-  }, {
-    key: 'getDescriptions',
-    value: function getDescriptions(gallery) {
-      return gallery.map(function (el) {
-        return el.alt;
-      });
-    }
-  }, {
-    key: 'openLightBox',
-    value: function openLightBox(gallery, i, larges, descriptions) {
-      var lightboxEl = document.createElement('div');
+  _createClass(Gallery, [{
+    key: 'openGallery',
+    value: function openGallery(container, i, data) {
+      var galleryEl = document.createElement('div');
 
-      var lightBoxContent = '\n      <div class="lightbox-overlay">\n        <figure class="lightbox-container">\n          <img src="' + larges[i] + '" class="lightbox-image">\n          <figcaption>\n            <p class="lightbox-description">Imagen ' + descriptions[i] + ' de ' + descriptions.length + '</p>\n          </figcaption>\n          <nav class="class="lightbox-navigation"">\n            <a href="" class="lightbox-navigation__button prev"></a>\n            <a href="" class="lightbox-navigation__button next"></a>\n          </nav>\n        </figure>\n      </div>\n    ';
+      console.log(container);
 
-      lightboxEl.innerHTML = lightBoxContent;
-      lightboxEl.id = 'lightbox';
-      document.body.appendChild(lightboxEl);
-      this.navigateLightBox(lightboxEl, i, larges, descriptions);
+      var galleryContent = '\n      <figure class="gallery-figure">\n        <img src="' + data[i] + '" class="gallery-image">\n        <figcaption>\n          <p class="gallery-description">' + (i + 1) + '</p>\n        </figcaption>\n        <nav class="class="gallery-navigation"">\n          <a href="" class="gallery-navigation__button prev"></a>\n          <a href="" class="gallery-navigation__button next"></a>\n        </nav>\n      </figure>\n    ';
+
+      galleryEl.innerHTML = galleryContent;
+      galleryEl.id = 'gallery';
+      document.body.appendChild(galleryEl);
+      this.navigateGallery(galleryEl, i, data);
     }
   }, {
-    key: 'navigateLightBox',
-    value: function navigateLightBox(lightboxEl, i, larges, descriptions) {
-      var prev = lightboxEl.querySelector('.prev'),
-          next = lightboxEl.querySelector('.next'),
-          image = lightboxEl.querySelector('img'),
-          description = lightboxEl.querySelector('p');
+    key: 'navigateGallery',
+    value: function navigateGallery(galleryEl, i, data) {
+      var prev = galleryEl.querySelector('.prev');
+      var next = galleryEl.querySelector('.next');
+      var image = galleryEl.querySelector('img');
+      var description = galleryEl.querySelector('p');
 
       window.addEventListener('keyup', function (e) {
         if (e.key === 'ArrowRight') next.click();
         if (e.key === 'ArrowLeft') prev.click();
       });
 
-      lightboxEl.addEventListener('click', function (e) {
+      galleryEl.addEventListener('click', function (e) {
         e.preventDefault();
         var target = e.target;
 
         if (target === prev) {
           if (i > 0) {
-            image.src = larges[i - 1];
+            image.src = data[i - 1];
             i--;
             image.classList.add('animated');
             setTimeout(function () {
@@ -92,8 +79,8 @@ var Lightbox = exports.Lightbox = function () {
             }, 500);
           }
         } else if (target === next) {
-          if (i < larges.length - 1) {
-            image.src = larges[i + 1];
+          if (i < data.length - 1) {
+            image.src = data[i + 1];
             i++;
             image.classList.add('animated');
             setTimeout(function () {
@@ -102,12 +89,12 @@ var Lightbox = exports.Lightbox = function () {
           }
         }
 
-        description.textContent = 'Imagen ' + descriptions[i] + ' de ' + descriptions.length;
+        description.textContent = i + 1;
       });
     }
   }]);
 
-  return Lightbox;
+  return Gallery;
 }();
 
 },{}]},{},[1]);
